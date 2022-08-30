@@ -1,9 +1,10 @@
-package chapter08.packet;
+package chapter09.packet;
 
-import chapter08.packet.login.LoginRequestPacket;
-import chapter08.serializer.JSONSerializer;
-import chapter08.serializer.Serializer;
-import chapter08.serializer.SerializerAlgorithm;
+import chapter09.packet.login.LoginRequestPacket;
+import chapter09.packet.login.LoginResponsePacket;
+import chapter09.serializer.JSONSerializer;
+import chapter09.serializer.Serializer;
+import chapter09.serializer.SerializerAlgorithm;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.ByteBufAllocator;
 
@@ -20,9 +21,9 @@ public class PacketCodec {
     private PacketCodec() {
     }
 
-    public ByteBuf encode(Packet packet) {
+    public ByteBuf encode(ByteBufAllocator byteBufAllocator, Packet packet) {
         // 获取 ByteBuf 和 对象字节数组
-        ByteBuf byteBuf = ByteBufAllocator.DEFAULT.buffer();
+        ByteBuf byteBuf = byteBufAllocator.buffer();
         byte[] bytes = Serializer.DEFAULT.serializer(packet);
 
         // 写入魔数
@@ -88,6 +89,9 @@ public class PacketCodec {
     private Class<? extends Packet> getRequestType(byte command) {
         if (Command.LOGIN_REQUEST.equals(command)) {
             return LoginRequestPacket.class;
+        }
+        if (Command.LOGIN_RESPONSE.equals(command)) {
+            return LoginResponsePacket.class;
         }
 
         return null;
