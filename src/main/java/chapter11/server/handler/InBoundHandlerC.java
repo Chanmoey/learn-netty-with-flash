@@ -12,6 +12,7 @@ public class InBoundHandlerC extends ChannelInboundHandlerAdapter {
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
         log.info("InBoundHandlerC: {}", msg);
+        ctx.channel().write(msg);
         super.channelRead(ctx, msg);
     }
 }

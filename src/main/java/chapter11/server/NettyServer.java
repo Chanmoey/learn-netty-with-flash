@@ -1,8 +1,6 @@
 package chapter11.server;
 
-import chapter11.server.handler.InBoundHandlerA;
-import chapter11.server.handler.InBoundHandlerB;
-import chapter11.server.handler.InBoundHandlerC;
+import chapter11.server.handler.*;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.nio.NioEventLoopGroup;
@@ -27,6 +25,10 @@ public class NettyServer {
                         nioSocketChannel.pipeline().addLast(new InBoundHandlerA());
                         nioSocketChannel.pipeline().addLast(new InBoundHandlerB());
                         nioSocketChannel.pipeline().addLast(new InBoundHandlerC());
+
+                        nioSocketChannel.pipeline().addLast(new OutboundHandlerA());
+                        nioSocketChannel.pipeline().addLast(new OutboundHandlerB());
+                        nioSocketChannel.pipeline().addLast(new OutboundHandlerC());
                     }
                 });
 
