@@ -1,17 +1,12 @@
 package chapter12.handler;
 
-import chapter12.packet.Packet;
 import chapter12.packet.PacketCodec;
 import chapter12.packet.login.LoginRequestPacket;
-import chapter12.packet.login.LoginResponsePacket;
-import chapter12.packet.message.MessageResponsePacket;
-import chapter12.utils.LoginUtil;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
 import lombok.extern.slf4j.Slf4j;
 
-import java.util.Date;
 import java.util.UUID;
 
 /**

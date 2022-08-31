@@ -1,6 +1,6 @@
 package chapter12.handler.clienthandler;
 
-import chapter10.packet.message.MessageResponsePacket;
+import chapter12.packet.message.MessageResponsePacket;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;

@@ -1,6 +1,6 @@
 package chapter12.handler.clienthandler;
 
-import chapter09.packet.login.LoginResponsePacket;
+import chapter12.packet.login.LoginResponsePacket;
 import chapter12.utils.LoginUtil;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
