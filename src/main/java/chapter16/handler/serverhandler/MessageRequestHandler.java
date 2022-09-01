@@ -33,7 +33,7 @@ public class MessageRequestHandler extends SimpleChannelInboundHandler<MessageRe
 
         // 将消息发送给消息接收方
         if (toUserChannel != null && SessionUtil.hasLogin(toUserChannel)) {
-            toUserChannel.writeAndFlush(messageRequestPacket);
+            toUserChannel.writeAndFlush(messageResponsePacket);
         } else {
             log.info("[{}]不在线，发送失败", messageRequestPacket.getToUserId());
         }

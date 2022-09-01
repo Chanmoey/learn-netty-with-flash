@@ -4,7 +4,11 @@ import chapter16.constant.Attributes;
 import io.netty.channel.Channel;
 import io.netty.util.Attribute;
 
+import java.util.concurrent.atomic.AtomicInteger;
+
 public class LoginUtil {
+
+    public static final AtomicInteger ID_CREATE = new AtomicInteger();
 
 
     public static void markAsLogin(Channel channel) {

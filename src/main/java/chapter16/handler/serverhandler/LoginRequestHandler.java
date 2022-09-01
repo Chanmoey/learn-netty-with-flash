@@ -10,6 +10,7 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.Date;
 import java.util.UUID;
 
 /**
@@ -25,9 +26,11 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
             response.setSuccess(true);
             String userId = randomUserId();
             response.setUserId(userId);
+            response.setUserName(loginRequestPacket.getUsername());
             response.setVersion(loginRequestPacket.getVersion());
             SessionUtil.bindSession(new Session(userId, loginRequestPacket.getUsername()), ctx.channel());
             LoginUtil.markAsLogin(ctx.channel());
+            log.info("{}: 用户{}登录成功, id为: {}", new Date(), loginRequestPacket.getUsername(), userId);
         } else {
             response.setReason("账号或密码校验失败");
             response.setSuccess(false);
@@ -47,6 +50,6 @@ public class LoginRequestHandler extends SimpleChannelInboundHandler<LoginReques
     }
 
     private String randomUserId() {
-        return UUID.randomUUID().toString().substring(0, 4);
+        return String.valueOf(LoginUtil.ID_CREATE.getAndIncrement());
     }
 }

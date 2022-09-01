@@ -7,7 +7,6 @@ import chapter16.packet.PacketDecoder;
 import chapter16.packet.PacketEncoder;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -39,7 +38,6 @@ public class NettyServer {
                             }
                         }
                 );
-        serverBootstrap.childOption(ChannelOption.TCP_NODELAY, true);
         bind(serverBootstrap, 1000);
     }
 

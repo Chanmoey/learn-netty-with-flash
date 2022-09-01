@@ -13,6 +13,7 @@ public class LoginResponsePacket extends Packet {
 
     private boolean success;
     private String userId;
+    private String userName;
     private String reason;
 
     @Override

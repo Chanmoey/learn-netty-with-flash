@@ -1,16 +1,16 @@
 package chapter16.client;
 
-import chapter08.packet.login.LoginRequestPacket;
 import chapter16.handler.clienthandler.LoginResponseHandler;
 import chapter16.handler.clienthandler.MessageResponseHandler;
 import chapter16.packet.PacketDecoder;
 import chapter16.packet.PacketEncoder;
+import chapter16.packet.login.LoginRequestPacket;
 import chapter16.packet.message.MessageRequestPacket;
+import chapter16.utils.SessionUtil;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelInitializer;
-import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioSocketChannel;
@@ -36,14 +36,12 @@ public class NettyClient {
                 .handler(new ChannelInitializer<SocketChannel>() {
                     @Override
                     protected void initChannel(SocketChannel socketChannel) throws Exception {
-                        // socket 连接上后，发送登录请求的逻辑放在哪里好呢?
                         socketChannel.pipeline().addLast(new PacketDecoder());
                         socketChannel.pipeline().addLast(new LoginResponseHandler());
                         socketChannel.pipeline().addLast(new MessageResponseHandler());
                         socketChannel.pipeline().addLast(new PacketEncoder());
                     }
                 });
-        bootstrap.option(ChannelOption.TCP_NODELAY, true);
         connect(bootstrap, "localhost", 1000, 1, 5);
     }
 
@@ -72,6 +70,32 @@ public class NettyClient {
         Scanner sc = new Scanner(System.in);
         LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
 
+        new Thread(() -> {
+            while (!Thread.interrupted()) {
+                if (!SessionUtil.hasLogin(channel)) {
+                    log.info("输入用户名登录: ");
+                    String userName = sc.nextLine();
+                    loginRequestPacket.setUsername(userName);
 
+                    // 使用默认密码
+                    loginRequestPacket.setPassword("pwd");
+
+                    // 发送登录数据包
+                    channel.writeAndFlush(loginRequestPacket);
+                    waitForLoginResponse();
+                } else {
+                    String toUserId = sc.next();
+                    String message = sc.next();
+                    channel.writeAndFlush(new MessageRequestPacket(toUserId, message));
+                }
+            }
+        }).start();
+    }
+
+    private static void waitForLoginResponse() {
+        try {
+            Thread.sleep(1000);
+        } catch (InterruptedException ignored) {
+        }
     }
 }
