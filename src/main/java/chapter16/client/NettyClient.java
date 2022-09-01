@@ -1,5 +1,6 @@
 package chapter16.client;
 
+import chapter08.packet.login.LoginRequestPacket;
 import chapter16.handler.clienthandler.LoginResponseHandler;
 import chapter16.handler.clienthandler.MessageResponseHandler;
 import chapter16.packet.PacketDecoder;
@@ -68,15 +69,9 @@ public class NettyClient {
     }
 
     private static void startConsoleThread(Channel channel) {
-        // 更佳实践：不要显示开启线程，而是使用线程池。
-        new Thread(() -> {
-            while (!Thread.interrupted()) {
-                log.info("输入消息发送至服务器: ");
-                Scanner sc = new Scanner(System.in);
-                String line = sc.nextLine();
-                channel.writeAndFlush(new MessageRequestPacket(line));
-            }
-        }).start();
+        Scanner sc = new Scanner(System.in);
+        LoginRequestPacket loginRequestPacket = new LoginRequestPacket();
+
 
     }
 }

@@ -1,5 +1,6 @@
 package chapter16.constant;
 
+import chapter16.utils.Session;
 import io.netty.util.AttributeKey;
 
 /**
@@ -7,4 +8,5 @@ import io.netty.util.AttributeKey;
  */
 public interface Attributes {
     AttributeKey<Boolean> LOGIN = AttributeKey.newInstance("login");
+    AttributeKey<Session> SESSION = AttributeKey.newInstance("session");
 }
