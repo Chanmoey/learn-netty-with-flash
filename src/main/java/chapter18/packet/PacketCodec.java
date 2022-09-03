@@ -1,9 +1,6 @@
 package chapter18.packet;
 
-import chapter18.packet.group.CreateGroupRequestPacket;
-import chapter18.packet.group.CreateGroupResponsePacket;
-import chapter18.packet.group.JoinGroupRequestPacket;
-import chapter18.packet.group.JoinGroupResponsePacket;
+import chapter18.packet.group.*;
 import chapter18.packet.login.LoginRequestPacket;
 import chapter18.packet.login.LoginResponsePacket;
 import chapter18.packet.message.MessageRequestPacket;
@@ -119,6 +116,18 @@ public class PacketCodec {
         }
         if (Command.JOIN_GROUP_RESPONSE.equals(command)) {
             return JoinGroupResponsePacket.class;
+        }
+        if (Command.QUIT_GROUP_REQUEST.equals(command)) {
+            return QuitGroupRequestPacket.class;
+        }
+        if (Command.QUIT_GROUP_RESPONSE.equals(command)) {
+            return QuitGroupResponsePacket.class;
+        }
+        if (Command.LIST_GROUP_MEMBERS_REQUEST.equals(command)) {
+            return ListGroupMembersRequestPacket.class;
+        }
+        if (Command.LIST_GROUP_MEMBERS_RESPONSE.equals(command)) {
+            return ListGroupMembersResponsePacket.class;
         }
 
         return null;

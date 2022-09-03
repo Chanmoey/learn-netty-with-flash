@@ -1,9 +1,6 @@
 package chapter18.client;
 
-import chapter18.handler.clienthandler.CreateGroupResponseHandler;
-import chapter18.handler.clienthandler.JoinGroupResponseHandler;
-import chapter18.handler.clienthandler.LoginResponseHandler;
-import chapter18.handler.clienthandler.MessageResponseHandler;
+import chapter18.handler.clienthandler.*;
 import chapter18.handler.console.ConsoleCommandManager;
 import chapter18.handler.console.LoginConsoleCommand;
 import chapter18.packet.PacketDecoder;
@@ -41,9 +38,11 @@ public class NettyClient {
                         socketChannel.pipeline().addLast(new PacketDecoder());
                         socketChannel.pipeline().addLast(new LoginResponseHandler());
                         socketChannel.pipeline().addLast(new MessageResponseHandler());
-                        socketChannel.pipeline().addLast(new PacketEncoder());
-                        socketChannel.pipeline().addLast(new JoinGroupResponseHandler());
                         socketChannel.pipeline().addLast(new CreateGroupResponseHandler());
+                        socketChannel.pipeline().addLast(new JoinGroupResponseHandler());
+                        socketChannel.pipeline().addLast(new QuitGroupResponseHandler());
+                        socketChannel.pipeline().addLast(new ListGroupMembersResponseHandler());
+                        socketChannel.pipeline().addLast(new PacketEncoder());
                     }
                 });
         connect(bootstrap, "localhost", 1000, 1, 5);
